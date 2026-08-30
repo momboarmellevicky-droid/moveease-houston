@@ -136,6 +136,34 @@
     position:relative;
   }
   .service-card:hover{transform:translateY(-6px);box-shadow:0 24px 40px -18px rgba(22,35,63,.18);border-color:transparent;}
+  .service-card{cursor:pointer;}
+  .service-card:focus-visible{outline:2px solid var(--coral);outline-offset:3px;}
+  .service-more{margin-top:14px;font-size:13px;font-weight:700;color:var(--coral);display:flex;align-items:center;gap:6px;}
+  .service-more::after{content:"→";transition:transform .2s;}
+  .service-card:hover .service-more::after{transform:translateX(4px);}
+
+  /* ---------- MODALE SERVICE ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(13,24,48,.6);backdrop-filter:blur(4px);
+    display:none;align-items:center;justify-content:center;z-index:200;padding:24px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    background:#fff;border-radius:24px;max-width:480px;width:100%;padding:40px;position:relative;
+    box-shadow:0 40px 80px -20px rgba(13,24,48,.4);
+  }
+  .modal-close{
+    position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:50%;
+    background:var(--cream-2);border:none;font-size:18px;color:var(--navy);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;transition:background .2s;
+  }
+  .modal-close:hover{background:var(--cream);}
+  .modal-box .service-num{margin-bottom:14px;}
+  .modal-box h3{font-size:24px;font-weight:600;color:var(--navy);margin-bottom:14px;}
+  .modal-box p{font-size:15px;color:var(--ink-soft);line-height:1.65;margin-bottom:20px;}
+  .modal-box ul{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .modal-box ul li{font-size:14px;color:var(--ink);display:flex;align-items:flex-start;gap:10px;}
+  .modal-box ul li::before{content:"✓";color:var(--coral);font-weight:800;flex-shrink:0;}
   .service-num{font-family:'Fraunces',serif;font-size:13px;color:var(--coral);font-weight:600;margin-bottom:18px;}
   .service-icon{width:44px;height:44px;margin-bottom:20px;}
   .service-card h4{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:10px;}
@@ -179,13 +207,28 @@
   .test-foot strong{display:block;font-size:15px;}
   .test-foot span{font-size:13px;color:rgba(255,255,255,.6);}
 
+  .test-slides{position:relative;min-height:180px;}
+  .test-slide{display:none;position:relative;}
+  .test-slide.active{display:block;animation:fadeSlide .4s ease;}
+  @keyframes fadeSlide{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .test-nav{display:flex;align-items:center;gap:18px;margin-top:36px;position:relative;}
+  .test-arrow{
+    width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);background:transparent;
+    color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:background .2s, border-color .2s;flex-shrink:0;
+  }
+  .test-arrow:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.6);}
+  .test-dots{display:flex;gap:8px;}
+  .test-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);border:none;cursor:pointer;padding:0;transition:background .2s, transform .2s;}
+  .test-dot.active{background:var(--coral-2);transform:scale(1.3);}
+
   /* ---------- CTA ---------- */
   .cta{padding:0 0 130px;}
   .cta-card{
     background:linear-gradient(120deg,var(--coral),var(--coral-2));border-radius:32px;
     padding:70px 60px;text-align:center;color:#fff;position:relative;overflow:hidden;
   }
-  .cta-card::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(255,255,255,.18),transparent 55%);}
+  .cta-card::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(255,255,255,.18),transparent 55%);pointer-events:none;}
   .cta-card h2{font-size:clamp(28px,3.6vw,42px);font-weight:600;max-width:640px;margin:0 auto 18px;position:relative;}
   .cta-card p{font-size:16px;color:rgba(255,255,255,.85);max-width:480px;margin:0 auto 34px;position:relative;}
   .cta-card .btn-primary{background:#fff;color:var(--coral);box-shadow:0 14px 30px -10px rgba(13,24,48,.35);position:relative;}
@@ -198,7 +241,7 @@
     background:rgba(255,255,255,.12);color:#fff;font-family:'Manrope',sans-serif;font-size:14.5px;
     outline:none;transition:border-color .2s, background .2s;
   }
-  .form-field input::placeholder,.form-field textarea::placeholder{color:rgba(255,255,255,.6);}
+  .form-field input::placeholder,.form-field textarea::placeholder{color:rgba(255,255,255,.85);}
   .form-field input:focus,.form-field textarea:focus{border-color:#fff;background:rgba(255,255,255,.18);}
   .form-field textarea{resize:vertical;min-height:96px;}
   .form-error{font-size:12.5px;color:#fff;background:rgba(22,35,63,.65);border-radius:8px;padding:6px 12px;margin-top:8px;display:none;width:fit-content;font-weight:700;border:1px solid rgba(255,255,255,.4);}
@@ -233,6 +276,9 @@
   @media(max-width:960px){
     nav ul{display:none;}
     .burger{display:flex;}
+    .nav-cta a.btn-ghost span.cta-phone-text{display:none;}
+    .nav-cta a.btn-ghost{padding:10px;width:40px;height:40px;justify-content:center;border-radius:50%;}
+    .nav-cta a.btn-primary{padding:10px 16px;font-size:13px;}
     .hero-grid{grid-template-columns:1fr;gap:56px;}
     .hero{padding:140px 0 70px;}
     .service-grid{grid-template-columns:repeat(2,1fr);}
@@ -272,7 +318,7 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-cta">
-      <a href="tel:2811234567" class="btn btn-ghost" style="padding:10px 20px;">(281) 123-4567</a>
+      <a href="tel:2811234567" class="btn btn-ghost" style="padding:10px 20px;" aria-label="Call (281) 123-4567">📞<span class="cta-phone-text">&nbsp;(281) 123-4567</span></a>
       <a href="#contact" class="btn btn-primary" style="padding:10px 22px;">Get a Quote</a>
     </div>
     <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -336,35 +382,50 @@
       <p>Each service stands on its own or bundles into a full end-to-end move — built around how Houston households actually pack up and settle in.</p>
     </div>
     <div class="service-grid">
-      <div class="service-card">
+      <div class="service-card" data-service="declutter" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="service-num">01</div>
         <svg class="service-icon" viewBox="0 0 44 44" fill="none"><rect x="9" y="16" width="26" height="20" rx="2" stroke="#E8574A" stroke-width="2"/><path d="M9 16L22 8L35 16" stroke="#16233F" stroke-width="2" stroke-linejoin="round"/><path d="M17 24H27" stroke="#E8574A" stroke-width="2" stroke-linecap="round"/></svg>
         <h4>Declutter</h4>
         <p>We sort what stays, what goes, and what gets a second life — room by room.</p>
+        <div class="service-more">See what's included</div>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-service="pack" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="service-num">02</div>
         <svg class="service-icon" viewBox="0 0 44 44" fill="none"><rect x="8" y="14" width="28" height="22" rx="2" stroke="#E8574A" stroke-width="2"/><path d="M8 20H36" stroke="#16233F" stroke-width="2"/><path d="M18 14V9H26V14" stroke="#16233F" stroke-width="2"/></svg>
         <h4>Pack</h4>
         <p>Labeled, cushioned, and inventoried boxes your movers can load with confidence.</p>
+        <div class="service-more">See what's included</div>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-service="coordinate" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="service-num">03</div>
         <svg class="service-icon" viewBox="0 0 44 44" fill="none"><rect x="4" y="18" width="22" height="14" rx="2" stroke="#E8574A" stroke-width="2"/><path d="M26 22H33L38 27V32H26V22Z" stroke="#16233F" stroke-width="2" stroke-linejoin="round"/><circle cx="13" cy="34" r="3" fill="#16233F"/><circle cx="31" cy="34" r="3" fill="#16233F"/></svg>
         <h4>Coordinate</h4>
         <p>We schedule movers, timelines, and access so nothing falls through on move day.</p>
+        <div class="service-more">See what's included</div>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-service="unpack" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="service-num">04</div>
         <svg class="service-icon" viewBox="0 0 44 44" fill="none"><path d="M8 20L22 8L36 20V36H8V20Z" stroke="#E8574A" stroke-width="2" stroke-linejoin="round"/><path d="M17 36V26H27V36" stroke="#16233F" stroke-width="2"/></svg>
         <h4>Unpack</h4>
         <p>Boxes emptied, surfaces styled — your new place feels lived-in from day one.</p>
+        <div class="service-more">See what's included</div>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-service="organize" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="service-num">05</div>
         <svg class="service-icon" viewBox="0 0 44 44" fill="none"><rect x="9" y="6" width="26" height="32" rx="2" stroke="#E8574A" stroke-width="2"/><path d="M9 16H35M9 26H35" stroke="#16233F" stroke-width="2"/></svg>
         <h4>Organize</h4>
         <p>Systems for closets, kitchens, and storage that actually hold up after week one.</p>
+        <div class="service-more">See what's included</div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="serviceModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-box">
+        <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+        <div class="service-num" id="modalNum">01</div>
+        <h3 id="modalTitle">Declutter</h3>
+        <p id="modalDesc"></p>
+        <ul id="modalList"></ul>
       </div>
     </div>
   </div>
@@ -410,10 +471,33 @@
 <section class="testimonial" id="testimonials">
   <div class="wrap">
     <div class="test-card">
-      <blockquote>MoveEase turned three chaotic weeks into four calm days. They packed, they coordinated the movers, and by the time we walked into the new house our kitchen was already organized. Worth every dollar.</blockquote>
-      <div class="test-foot">
-        <div class="test-avatar">A.R.</div>
-        <div><strong>Amanda R.</strong><span>Relocated to The Heights, Houston</span></div>
+      <div class="test-slides" id="testSlides">
+        <div class="test-slide active">
+          <blockquote>MoveEase turned three chaotic weeks into four calm days. They packed, they coordinated the movers, and by the time we walked into the new house our kitchen was already organized. Worth every dollar.</blockquote>
+          <div class="test-foot">
+            <div class="test-avatar">A.R.</div>
+            <div><strong>Amanda R.</strong><span>Relocated to The Heights, Houston</span></div>
+          </div>
+        </div>
+        <div class="test-slide">
+          <blockquote>We were dreading the downsizing process after 20 years in the same house. The team was patient, organized, and genuinely kind about the hard decisions. Our new condo feels like home already.</blockquote>
+          <div class="test-foot">
+            <div class="test-avatar">D.M.</div>
+            <div><strong>David M.</strong><span>Downsized in Katy, TX</span></div>
+          </div>
+        </div>
+        <div class="test-slide">
+          <blockquote>As a busy parent of three, I couldn't have coordinated movers, packers, and school drop-off in the same week without MoveEase. They handled everything and communicated clearly at every step.</blockquote>
+          <div class="test-foot">
+            <div class="test-avatar">S.K.</div>
+            <div><strong>Sara K.</strong><span>Relocated to Sugar Land, TX</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="test-nav">
+        <button class="test-arrow" id="testPrev" aria-label="Previous review">←</button>
+        <div class="test-dots" id="testDots"></div>
+        <button class="test-arrow" id="testNext" aria-label="Next review">→</button>
       </div>
     </div>
   </div>
@@ -590,6 +674,89 @@
     successBox.classList.add('show');
     form.reset();
   });
+
+  // Modale de détail des services : cliquable + accessible clavier
+  const serviceData = {
+    declutter: {
+      num: '01', title: 'Declutter',
+      desc: 'We help you decide what stays, what goes, and what deserves a second life — room by room, without judgment or pressure.',
+      items: ['Full room-by-room walkthrough', 'Keep / donate / sell / discard sorting', 'Coordination with donation centers', 'Optional resale of higher-value items'],
+    },
+    pack: {
+      num: '02', title: 'Pack',
+      desc: 'Every item is wrapped, boxed, and labeled by room and priority, so your movers — and you — always know what\'s inside.',
+      items: ['Professional-grade packing materials', 'Room-by-room labeling system', 'Fragile & high-value item handling', 'Full inventory list provided'],
+    },
+    coordinate: {
+      num: '03', title: 'Coordinate',
+      desc: 'We manage moving-day logistics — movers, timelines, building access — so nothing falls through the cracks.',
+      items: ['Moving company scheduling', 'Building/HOA access coordination', 'On-site day-of supervision', 'Real-time timeline adjustments'],
+    },
+    unpack: {
+      num: '04', title: 'Unpack',
+      desc: 'We empty every box and set up your new space so it feels like home from the very first night.',
+      items: ['Same-day or next-day unpacking', 'Kitchen & closet setup', 'Furniture placement assistance', 'Box & packing material removal'],
+    },
+    organize: {
+      num: '05', title: 'Organize',
+      desc: 'We build storage systems for closets, kitchens, and pantries that are realistic to maintain long after we leave.',
+      items: ['Custom closet & pantry systems', 'Labeled storage solutions', 'Kitchen zone organization', '30-day follow-up check-in'],
+    },
+  };
+  const modal = document.getElementById('serviceModal');
+  const modalNum = document.getElementById('modalNum');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalList = document.getElementById('modalList');
+  const modalClose = document.getElementById('modalClose');
+  let lastFocused = null;
+
+  function openServiceModal(key){
+    const info = serviceData[key];
+    if (!info) return;
+    modalNum.textContent = info.num;
+    modalTitle.textContent = info.title;
+    modalDesc.textContent = info.desc;
+    modalList.innerHTML = info.items.map(i => `<li>${i}</li>`).join('');
+    lastFocused = document.activeElement;
+    modal.classList.add('open');
+    modalClose.focus();
+  }
+  function closeServiceModal(){
+    modal.classList.remove('open');
+    lastFocused?.focus();
+  }
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('click', () => openServiceModal(card.dataset.service));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openServiceModal(card.dataset.service); }
+    });
+  });
+  modalClose?.addEventListener('click', closeServiceModal);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) closeServiceModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeServiceModal(); });
+
+  // Carrousel de témoignages
+  const slides = Array.from(document.querySelectorAll('.test-slide'));
+  const dotsWrap = document.getElementById('testDots');
+  let testIndex = 0;
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'test-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Review ${i + 1}`);
+    dot.addEventListener('click', () => showSlide(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = Array.from(dotsWrap.children);
+  function showSlide(i){
+    testIndex = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === testIndex));
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === testIndex));
+  }
+  document.getElementById('testPrev')?.addEventListener('click', () => showSlide(testIndex - 1));
+  document.getElementById('testNext')?.addEventListener('click', () => showSlide(testIndex + 1));
+  let testAutoplay = setInterval(() => showSlide(testIndex + 1), 7000);
+  document.querySelector('.test-card')?.addEventListener('mouseenter', () => clearInterval(testAutoplay));
 </script>
 
 </body>
